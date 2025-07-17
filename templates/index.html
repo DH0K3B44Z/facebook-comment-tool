@@ -1,88 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>🔥 Facebook Auto Commenter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #1a1a1a, #333);
-            color: #fff;
-            font-family: 'Orbitron', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px;
-        }
-
-        h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-            color: #00ffff;
-        }
-
-        form {
-            background-color: #222;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 10px rgba(0,255,255,0.3);
-            width: 90%;
-            max-width: 500px;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            color: #0ff;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            background: #111;
-            border: 1px solid #555;
-            border-radius: 10px;
-            color: #fff;
-        }
-
-        button {
-            margin-top: 25px;
-            padding: 12px 30px;
-            background-color: #00cccc;
-            color: #000;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background-color: #00ffaa;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Saiim Lejend Comment Tool</title>
+  <style>
+    body {
+      background-color: #121212;
+      font-family: 'Poppins', sans-serif;
+      color: #e0e0e0;
+      text-align: center;
+      padding: 20px;
+    }
+    img.logo {
+      width: 120px;
+      border-radius: 100%;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+    h1 {
+      color: #00ffcc;
+      margin-bottom: 10px;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+    .input-group {
+      margin: 10px 0;
+    }
+    input[type="text"], textarea {
+      width: 80%;
+      padding: 10px;
+      background: #1e1e1e;
+      border: 1px solid #444;
+      color: #eee;
+      border-radius: 8px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px 5px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #startBtn {
+      background-color: #00e676;
+      color: #000;
+    }
+    #stopBtn {
+      background-color: #ff1744;
+      color: #fff;
+    }
+    #console {
+      margin-top: 20px;
+      background: #000;
+      color: #00ff00;
+      padding: 10px;
+      border-radius: 10px;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      font-family: monospace;
+      font-size: 14px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body>
-    <h1>🔥 FB Auto Commenter</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <label for="hatersname">😡 Haters Name:</label>
-        <input type="text" name="hatersname" required placeholder="e.g. Saiim, NoobBoy">
 
-        <label for="timeinterval">⏱ Time Interval (seconds):</label>
-        <input type="number" name="timeinterval" min="1" required placeholder="e.g. 30">
+  <!-- 🔥 Saiim Lejend Logo -->
+  <img src="https://i.imgur.com/0Z8FvCp.jpg" class="logo" alt="Saiim Lejend Logo" />
 
-        <label for="messages">📄 Message File (.txt):</label>
-        <input type="file" name="messages" accept=".txt" required>
+  <h1>🔥 Saiim Lejend Comment Tool 🔥</h1>
 
-        <label for="postlink">🔗 Facebook Post Link:</label>
-        <input type="text" name="postlink" required placeholder="https://facebook.com/post/xyz">
+  <form method="POST" action="/start">
+    <div class="input-group">
+      <input type="text" name="post_id" placeholder="Enter Post ID (e.g., 1234567890_1234567890)" required>
+    </div>
+    <div class="input-group">
+      <input type="text" name="token_file" placeholder="Enter Token File Name (e.g., tokens.txt)" required>
+    </div>
+    <div class="input-group">
+      <input type="text" name="comment_file" placeholder="Enter Comment File Name (e.g., comments.txt)" required>
+    </div>
+    <div class="input-group">
+      <input type="text" name="delay" placeholder="Delay (in seconds, e.g., 60)" required>
+    </div>
+    <button type="submit" id="startBtn">🚀 Start Commenting</button>
+  </form>
 
-        <label for="tokens">🔑 Token File (.txt):</label>
-        <input type="file" name="tokens" accept=".txt" required>
+  <form method="POST" action="/stop">
+    <button type="submit" id="stopBtn">🛑 Stop</button>
+  </form>
 
-        <button type="submit">🚀 Launch Attack</button>
-    </form>
+  <div id="console">
+    {% if log %}
+      {% for line in log %}
+        {{ line }}<br>
+      {% endfor %}
+    {% else %}
+      Console output will appear here...
+    {% endif %}
+  </div>
+
 </body>
 </html>
