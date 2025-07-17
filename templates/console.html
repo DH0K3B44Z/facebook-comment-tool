@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🖥️ Console</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="log-card">
+        <h2>🖨️ Comment Logs</h2>
+        {% for log, status in logs %}
+            <div class="log {{ status }}">{{ log }}</div>
+        {% endfor %}
+    </div>
+</body>
+</html>
