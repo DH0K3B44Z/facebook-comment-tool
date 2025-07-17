@@ -1,39 +1,35 @@
-from flask import Flask, request, render_template_string, redirect
+from flask import Flask, render_template, request
 import os
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def index():
-    with open('index.html', 'r') as f:
-        return render_template_string(f.read())
+    return render_template('index.html')
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    token = request.files['token_file']
-    postid = request.files['postid_file']
-    comment = request.files['comment_file']
-    haters_name = request.form.get('haters_name', '').strip()
-    interval = request.form.get('interval', '').strip()
+@app.route('/submit', methods=['POST'])
+def submit():
+    token_file = request.files['token_file']
+    comment_file = request.files['comment_file']
+    post_id = request.form['post_id']
+    hater_name = request.form.get('hater_name', '')
+    time_interval = int(request.form.get('time_interval', '30'))
 
-    # Save files
-    token.save(os.path.join(UPLOAD_FOLDER, 'tokens.txt'))
-    postid.save(os.path.join(UPLOAD_FOLDER, 'postids.txt'))
-    comment.save(os.path.join(UPLOAD_FOLDER, 'comments.txt'))
+    token_path = os.path.join(UPLOAD_FOLDER, 'tokens.txt')
+    comment_path = os.path.join(UPLOAD_FOLDER, 'comments.txt')
 
-    # Save extra inputs
-    with open(os.path.join(UPLOAD_FOLDER, 'hatersname.txt'), 'w') as f:
-        f.write(haters_name if haters_name else 'None')
+    token_file.save(token_path)
+    comment_file.save(comment_path)
 
-    with open(os.path.join(UPLOAD_FOLDER, 'interval.txt'), 'w') as f:
-        f.write(interval if interval else '60')
+    # ✅ You can print/log or pass these to your logic
+    print("Post ID:", post_id)
+    print("Hater Name:", hater_name)
+    print("Interval:", time_interval)
 
-    return '''
-    <h2 style="text-align:center; color:lime;">✅ Submitted Successfully!</h2>
-    <p style="text-align:center;"><a href="/">⬅️ Go Back</a></p>
-    '''
+    # Your comment-sending logic will go here...
+    return f"Comments sent to Post ID {post_id} successfully."
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(debug=True)
