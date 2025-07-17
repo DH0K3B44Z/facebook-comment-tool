@@ -1,52 +1,101 @@
-from flask import Flask, render_template, request, jsonify
-import requests, time, threading, random
+from flask import Flask, render_template_string, request
+import datetime
 
 app = Flask(__name__)
-log_data = []
 
-def send_comment(token, post_id, comment):
-    try:
-        graph_url = f"https://graph.facebook.com/{post_id}/comments"
-        response = requests.post(graph_url, data={
-            'message': comment,
-            'access_token': token
-        })
-        if response.status_code == 200:
-            return True, "Comment sent successfully"
-        else:
-            return False, response.json().get('error', {}).get('message', 'Unknown Error')
-    except Exception as e:
-        return False, str(e)
+HTML_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>𝗧𝗛𝟯 𝗟𝟯𝗝𝟯𝗡𝗗 𝗙𝗨𝗖𝗞𝟯𝗥 𝗦𝗔𝗜𝗜𝗠 <3</title>
+    <style>
+        body {
+            background-image: url('https://i.pinimg.com/originals/54/94/66/5494660b8b139e5ef7e58e9286c1a570.jpg');
+            background-size: cover;
+            color: white;
+            font-family: 'Courier New', monospace;
+            text-shadow: 1px 1px 2px black;
+        }
+        .panel {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 60px auto;
+            box-shadow: 0 0 20px lime;
+        }
+        input[type="text"], input[type="url"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid lime;
+            border-radius: 5px;
+            background: #111;
+            color: #0f0;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: lime;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+        }
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <h1>𝗧𝗛𝟯 𝗟𝟯𝗝𝟯𝗡𝗗 𝗙𝗨𝗖𝗞𝟯𝗥 𝗦𝗔𝗜𝗜𝗠 &lt;3</h1>
+        <form method="POST">
+            <label>Facebook Token:</label>
+            <input type="text" name="token" required>
+            
+            <label>Post Link:</label>
+            <input type="url" name="post" required>
+            
+            <label>Comment Message:</label>
+            <textarea name="message" rows="3" required></textarea>
 
-def comment_worker(tokens, comments, post_id, haters, interval):
-    i = 0
-    while True:
-        token = tokens[i % len(tokens)]
-        comment = random.choice(comments)
-        success, message = send_comment(token, post_id, f"{haters} {comment}")
-        log_data.append(f"Token: {token[:5]}... | Comment: {comment} | Status: {message}")
-        time.sleep(interval)
-        i += 1
+            <label>Haters Name (Optional):</label>
+            <input type="text" name="haters">
+            
+            <label>Delay Between Comments (seconds):</label>
+            <input type="text" name="delay" value="60">
+            
+            <button type="submit">Start Commenting</button>
+        </form>
+    </div>
+</body>
+</html>
+"""
 
 @app.route('/', methods=['GET', 'POST'])
-def index():
-    global log_data
+def home():
     if request.method == 'POST':
-        tokens_file = request.files['tokens']
-        comments_file = request.files['comments']
-        haters = request.form['haters']
-        post_id = request.form['post']
-        interval = int(request.form['interval'])
+        token = request.form.get('token')
+        post = request.form.get('post')
+        message = request.form.get('message')
+        haters = request.form.get('haters')
+        delay = request.form.get('delay')
 
-        tokens = tokens_file.read().decode().splitlines()
-        comments = comments_file.read().decode().splitlines()
+        print("=== Form Submitted ===")
+        print("Token:", token)
+        print("Post:", post)
+        print("Message:", message)
+        print("Haters:", haters)
+        print("Delay:", delay)
+        print("======================")
 
-        log_data = []
-        t = threading.Thread(target=comment_worker, args=(tokens, comments, post_id, haters, interval))
-        t.daemon = True
-        t.start()
+        return "Form submitted successfully at " + str(datetime.datetime.now())
 
-        return render_template('index.html', started=True, log=log_data)
-    return render_template('index.html', started=False, log=log_data)
+    return render_template_string(HTML_TEMPLATE)
 
-@app.route
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=10000)
