@@ -1,37 +1,31 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import os
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
-def index():
+def control_panel():
     if request.method == 'POST':
-        token_path = request.form.get('token_path')
-        message_path = request.form.get('message_path')
-        thread_path = request.form.get('thread_path')
-        time_interval = request.form.get('time_interval')
-        haters_name = request.form.get('haters_name')
+        os.makedirs("files", exist_ok=True)
 
-        with open('files/token.txt', 'w') as f:
-            f.write(token_path.strip())
-        with open('files/message.txt', 'w') as f:
-            f.write(message_path.strip())
-        with open('files/thread.txt', 'w') as f:
-            f.write(thread_path.strip())
-        with open('files/time.txt', 'w') as f:
-            f.write(time_interval.strip())
-        with open('files/haters.txt', 'w') as f:
-            f.write(haters_name.strip())
+        with open("files/tokens.txt", "w") as f:
+            f.write(request.form['tokens'])
 
-        return redirect(url_for('success'))
+        with open("files/thread.txt", "w") as f:
+            f.write(request.form['thread'])
+
+        with open("files/messages.txt", "w") as f:
+            f.write(request.form['messages'])
+
+        with open("files/time.txt", "w") as f:
+            f.write(request.form['time_interval'])
+
+        with open("files/haters.txt", "w") as f:
+            f.write(request.form['haters_name'])
+
+        return "✅ All files saved successfully. Tool can be launched now!"
 
     return render_template('index.html')
 
-@app.route('/success')
-def success():
-    return 'Files saved successfully! You can now close this tab.'
-
 if __name__ == '__main__':
-    if not os.path.exists('files'):
-        os.makedirs('files')
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=7860)
