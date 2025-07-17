@@ -1,22 +1,44 @@
-from flask import Flask, render_template, request
-import time
-import random
+from flask import Flask, render_template, request, redirect, url_for
+import os
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    status = ""
     if request.method == 'POST':
-        token = request.form.get('token')
-        post_id = request.form.get('post_id')
-        message = request.form.get('message')
-        haters_name = request.form.get('haters_name')
-        delay = float(request.form.get('delay') or 0)
+        # Save haters name
+        haters_name = request.form.get('hatersname')
+        with open('hatersname.txt', 'w', encoding='utf-8') as f:
+            f.write(haters_name)
 
-        final_message = f"{message} {haters_name}"
-        # Simulate sending
-        status = f"✅ Comment sent to post ID: {post_id} with delay {delay}s and message: {final_message}"
-        time.sleep(delay)
+        # Save time interval
+        time_interval = request.form.get('timeinterval')
+        with open('timeinterval.txt', 'w') as f:
+            f.write(time_interval)
 
-    return render_template('index.html', status=status)
+        # Save message file
+        message_file = request.files.get('messages')
+        if message_file:
+            message_file.save('messages.txt')
+
+        # Save post link
+        post_link = request.form.get('postlink')
+        with open('postlink.txt', 'w') as f:
+            f.write(post_link)
+
+        # Save token file
+        token_file = request.files.get('tokens')
+        if token_file:
+            token_file.save('tokens.txt')
+
+        return redirect(url_for('success'))
+
+    return render_template('index.html')
+
+
+@app.route('/success')
+def success():
+    return "✅ Data received successfully! You can now run your commenting tool."
+
+if __name__ == '__main__':
+    app.run(debug=True)
