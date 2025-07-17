@@ -1,64 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>𝔓𝔫𝔢 𝔯𝔦𝔢𝔫𝔭 𝔯𝔢𝔫𝔯𝔢 𝔴𝔭𝔫𝔯𝔬 𝔖𝔢𝔫𝔫 <❤</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><b>Auto Comment Tool</b></title>
   <style>
+    * {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
     body {
-      background-image: url('/static/background.jpg');
-      background-size: cover;
-      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: #fff;
-      padding: 40px;
-      text-align: center;
-    }
-    .form-box {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 15px;
-      display: inline-block;
-      box-shadow: 0 0 15px #f0f;
-    }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 10px;
-      border: none;
-      font-size: 16px;
-    }
-    input[type="file"] {
-      background-color: #222;
-      color: #0f0;
-    }
-    input[type="text"], input[type="number"] {
-      width: 300px;
-    }
-    button {
-      background-color: crimson;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
-      background-color: #a00;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
     h1 {
-      font-size: 24px;
+      font-size: 2.5rem;
+      font-weight: bold;
       margin-bottom: 30px;
-      text-shadow: 0 0 10px #f0f;
+      color: #00ffff;
+    }
+    form {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #00ffff;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 15px 0 5px;
+      color: #ffcc00;
+    }
+    input[type="file"] {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: #fff;
+    }
+    button {
+      margin-top: 25px;
+      padding: 12px 25px;
+      background: #00cc99;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      background: #009977;
+    }
+    .file-instruction {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      font-style: italic;
     }
   </style>
 </head>
 <body>
-  <div class="form-box">
-    <h1>𝔓𝔫𝔢 𝔯𝔦𝔢𝔫𝔭 𝔯𝔢𝔫𝔯𝔢 𝔴𝔭𝔫𝔯𝔬 𝔖𝔢𝔫𝔫 <❤</h1>
-    <form method="POST" enctype="multipart/form-data">
-      <input type="text" name="hater" placeholder="Hater's Name" required><br>
-      <input type="text" name="post_id" placeholder="Post ID only" required><br>
-      <input type="number" name="delay" placeholder="Delay in seconds" required><br>
-      <input type="file" name="token_file" accept=".txt" required><br>
-      <input type="file" name="comment_file" accept=".txt" required><br>
-      <button type="submit">Start Commenting</button>
-    </form>
-  </div>
+  <h1><b>🔥 Facebook Auto Comment Tool 🔥</b></h1>
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <label for="tokenFile">Upload <u>token.txt</u> (1 token per line)</label>
+    <input type="file" name="tokenFile" id="tokenFile" required />
+    <div class="file-instruction">File name: <b>token.txt</b></div>
+
+    <label for="commentFile">Upload <u>comment.txt</u> (1 comment per line)</label>
+    <input type="file" name="commentFile" id="commentFile" required />
+    <div class="file-instruction">File name: <b>comment.txt</b></div>
+
+    <button type="submit">🚀 Start Commenting</button>
+  </form>
 </body>
 </html>
