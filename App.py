@@ -1,41 +1,45 @@
 from flask import Flask, render_template, request
-import requests, time, random
+import time
+import os
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route('/')
 def index():
-    if request.method == "POST":
-        hater = request.form["hater"]
-        post_id = request.form["post_id"]
-        delay = int(request.form["delay"])
-        try:
-            with open("comments.txt", "r") as f:
-                comments = [c.strip() for c in f if c.strip()]
-            with open("tokens.txt", "r") as f:
-                tokens = [t.strip() for t in f if t.strip()]
-        except:
-            return "Error loading files."
+    return render_template('index.html')
 
-        log = []
-        token_index = 0
+@app.route('/submit', methods=['POST'])
+def submit():
+    token_file = request.files.get('token_file')
+    comment_file = request.files.get('comment_file')
+    post_id = request.form.get('post_id')
+    hatername = request.form.get('hatername')
+    interval = float(request.form.get('interval', 1))
+
+    if not all([token_file, comment_file, post_id, hatername]):
+        return "Missing input fields."
+
+    # Save uploaded files temporarily
+    token_path = 'token_temp.txt'
+    comment_path = 'comment_temp.txt'
+    token_file.save(token_path)
+    comment_file.save(comment_path)
+
+    with open(token_path, 'r') as tf:
+        tokens = [line.strip() for line in tf if line.strip()]
+    with open(comment_path, 'r') as cf:
+        comments = [line.strip() for line in cf if line.strip()]
+
+    os.remove(token_path)
+    os.remove(comment_path)
+
+    print(f"[LOG] Starting commenting on post ID: {post_id}")
+    for token in tokens:
         for comment in comments:
-            token = tokens[token_index % len(tokens)]
-            url = f"https://graph.facebook.com/{post_id}/comments"
-            headers = {"Authorization": f"Bearer {token}"}
-            data = {"message": f"{comment} ~ {hater}"}
-            r = requests.post(url, data=data, headers=headers)
-            if r.status_code == 200:
-                log.append(f"✅ Sent: {comment}")
-            else:
-                log.append(f"❌ Failed with token {token[:10]}...")
+            print(f"[{time.strftime('%H:%M:%S')}] Token: {token} ➜ {comment} [To: {hatername}]")
+            time.sleep(interval)
 
-            token_index += 1
-            time.sleep(delay)
+    return "✅ Comments Sent Successfully!"
 
-        return "<br>".join(log)
-
-    return render_template("index.html")
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+if __name__ == '__main__':
+    app.run(debug=True)
