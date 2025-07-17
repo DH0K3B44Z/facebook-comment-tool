@@ -1,96 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>L3J3ND S41IM S3RV3R</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SAIIM TOOL PANEL</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(145deg, #1c1c1c, #2d2d2d);
-      font-family: 'Orbitron', sans-serif;
-      color: #00ffcc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to right, #000000, #1f1f1f);
+      color: #ffffff;
     }
 
     .container {
-      background: #121212;
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 0 25px #00ffcc, 0 0 15px #00ffcc inset;
-      width: 90%;
-      max-width: 500px;
+      max-width: 450px;
+      margin: 50px auto;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+      background: #111111;
     }
 
     h1 {
-      font-size: 28px;
-      color: #00ffcc;
       text-align: center;
-      margin-bottom: 30px;
-      text-shadow: 0 0 8px #00ffcc;
+      color: #00ffcc;
+      font-size: 28px;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
     }
 
     label {
       display: block;
-      margin-top: 15px;
-      margin-bottom: 5px;
-      color: #ffffff;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #ff66ff;
+      text-shadow: 0 0 3px #ff00ff;
     }
 
     input[type="file"],
-    input[type="text"],
     input[type="number"] {
       width: 100%;
       padding: 10px;
-      background-color: #1e1e1e;
-      color: #00ffcc;
-      border: 1px solid #00ffcc;
+      margin-top: 5px;
+      background-color: #222;
+      color: #fff;
+      border: 1px solid #555;
       border-radius: 10px;
+      font-family: 'Orbitron', sans-serif;
       font-size: 14px;
     }
 
     button {
-      margin-top: 25px;
+      display: block;
       width: 100%;
+      margin-top: 30px;
       padding: 12px;
-      background-color: #00ffcc;
-      color: #000;
-      border: none;
-      border-radius: 10px;
       font-size: 16px;
       font-weight: bold;
-      box-shadow: 0 0 10px #00ffcc;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #00ffcc, #00ccff);
+      color: #000;
       cursor: pointer;
+      box-shadow: 0 0 10px #00ffff;
+      transition: 0.3s ease;
     }
 
     button:hover {
-      background-color: #00ddbb;
+      background: linear-gradient(145deg, #00ccff, #00ffcc);
+      box-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>𝗟𝟯𝗝𝟯𝗡𝗗 𝗦𝟰𝟭𝟭𝗠 𝗦𝟯𝗥𝗩𝟯𝗥</h1>
-    <form action="/submit" method="post" enctype="multipart/form-data">
-      <label>Choose Access Token File</label>
-      <input type="file" name="token_file" required>
+    <h1>SAIIM TOOL PANEL</h1>
 
-      <label>Choose Comment File</label>
-      <input type="file" name="comment_file" required>
+    <form method="POST" enctype="multipart/form-data">
+      <label for="tokens">Tokens File</label>
+      <input type="file" name="tokens" required />
 
-      <label>Enter Post ID</label>
-      <input type="text" name="post_id" required>
+      <label for="threads">Threads File</label>
+      <input type="file" name="threads" required />
 
-      <label>Enter Hater Name</label>
-      <input type="text" name="hater_name" placeholder="Optional">
+      <label for="messages">Messages File</label>
+      <input type="file" name="messages" required />
 
-      <label>Enter Time Interval (in seconds)</label>
-      <input type="number" name="time_interval" value="30" min="1">
+      <label for="haters">Haters Name File</label>
+      <input type="file" name="haters" required />
 
-      <button type="submit">Submit</button>
+      <label for="interval">Time Interval (in seconds)</label>
+      <input type="number" name="interval" min="1" max="999" value="5" required />
+
+      <button type="submit">Launch Tool</button>
     </form>
   </div>
 </body>
