@@ -2,27 +2,27 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 
 app = Flask(__name__)
+UPLOAD_FOLDER = 'uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    message = ''
+    if request.method == 'POST':
+        for filetype in ['tokens', 'messages', 'threads']:
+            uploaded_file = request.files.get(filetype)
+            if uploaded_file and uploaded_file.filename:
+                uploaded_file.save(os.path.join(UPLOAD_FOLDER, f"{filetype}.txt"))
+        message = '✅ Files uploaded successfully!'
+    return render_template('index.html', message=message)
 
-@app.route('/send', methods=['POST'])
-def send():
-    chat_link = request.form.get('chat_link')
-    message_file = request.files['message_file']
-    delay = request.form.get('delay')
+@app.route('/start')
+def start():
+    return '🚀 Started (Add your backend script logic here)'
 
-    if message_file:
-        messages = message_file.read().decode('utf-8').splitlines()
-        with open("messages.txt", "w", encoding="utf-8") as f:
-            f.write("\n".join(messages))
+@app.route('/stop')
+def stop():
+    return '🛑 Stopped (Add logic to stop your process)'
 
-    with open("config.txt", "w") as f:
-        f.write(f"{chat_link}\n{delay}")
-
-    return redirect(url_for('index'))
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+if __name__ == '__main__':
+    app.run(debug=True)
