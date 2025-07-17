@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request
-import time
+from flask import Flask, render_template, request, redirect, url_for
 import os
 
 app = Flask(__name__)
@@ -8,38 +7,22 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    token_file = request.files.get('token_file')
-    comment_file = request.files.get('comment_file')
-    post_id = request.form.get('post_id')
-    hatername = request.form.get('hatername')
-    interval = float(request.form.get('interval', 1))
+@app.route('/send', methods=['POST'])
+def send():
+    chat_link = request.form.get('chat_link')
+    message_file = request.files['message_file']
+    delay = request.form.get('delay')
 
-    if not all([token_file, comment_file, post_id, hatername]):
-        return "Missing input fields."
+    if message_file:
+        messages = message_file.read().decode('utf-8').splitlines()
+        with open("messages.txt", "w", encoding="utf-8") as f:
+            f.write("\n".join(messages))
 
-    # Save uploaded files temporarily
-    token_path = 'token_temp.txt'
-    comment_path = 'comment_temp.txt'
-    token_file.save(token_path)
-    comment_file.save(comment_path)
+    with open("config.txt", "w") as f:
+        f.write(f"{chat_link}\n{delay}")
 
-    with open(token_path, 'r') as tf:
-        tokens = [line.strip() for line in tf if line.strip()]
-    with open(comment_path, 'r') as cf:
-        comments = [line.strip() for line in cf if line.strip()]
+    return redirect(url_for('index'))
 
-    os.remove(token_path)
-    os.remove(comment_path)
-
-    print(f"[LOG] Starting commenting on post ID: {post_id}")
-    for token in tokens:
-        for comment in comments:
-            print(f"[{time.strftime('%H:%M:%S')}] Token: {token} ➜ {comment} [To: {hatername}]")
-            time.sleep(interval)
-
-    return "✅ Comments Sent Successfully!"
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
