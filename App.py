@@ -1,31 +1,39 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, render_template_string, redirect
 import os
 
 app = Flask(__name__)
+UPLOAD_FOLDER = 'uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-@app.route('/', methods=['GET', 'POST'])
-def control_panel():
-    if request.method == 'POST':
-        os.makedirs("files", exist_ok=True)
+@app.route('/', methods=['GET'])
+def index():
+    with open('index.html', 'r') as f:
+        return render_template_string(f.read())
 
-        with open("files/tokens.txt", "w") as f:
-            f.write(request.form['tokens'])
+@app.route('/upload', methods=['POST'])
+def upload():
+    token = request.files['token_file']
+    postid = request.files['postid_file']
+    comment = request.files['comment_file']
+    haters_name = request.form.get('haters_name', '').strip()
+    interval = request.form.get('interval', '').strip()
 
-        with open("files/thread.txt", "w") as f:
-            f.write(request.form['thread'])
+    # Save files
+    token.save(os.path.join(UPLOAD_FOLDER, 'tokens.txt'))
+    postid.save(os.path.join(UPLOAD_FOLDER, 'postids.txt'))
+    comment.save(os.path.join(UPLOAD_FOLDER, 'comments.txt'))
 
-        with open("files/messages.txt", "w") as f:
-            f.write(request.form['messages'])
+    # Save extra inputs
+    with open(os.path.join(UPLOAD_FOLDER, 'hatersname.txt'), 'w') as f:
+        f.write(haters_name if haters_name else 'None')
 
-        with open("files/time.txt", "w") as f:
-            f.write(request.form['time_interval'])
+    with open(os.path.join(UPLOAD_FOLDER, 'interval.txt'), 'w') as f:
+        f.write(interval if interval else '60')
 
-        with open("files/haters.txt", "w") as f:
-            f.write(request.form['haters_name'])
-
-        return "✅ All files saved successfully. Tool can be launched now!"
-
-    return render_template('index.html')
+    return '''
+    <h2 style="text-align:center; color:lime;">✅ Submitted Successfully!</h2>
+    <p style="text-align:center;"><a href="/">⬅️ Go Back</a></p>
+    '''
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=7860)
+    app.run(host='0.0.0.0', port=8080)
