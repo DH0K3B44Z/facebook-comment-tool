@@ -2,94 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>🔥 Auto Comment Panel</title>
+    <title>🔥 Facebook Auto Commenter</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            margin: 0;
-            background: linear-gradient(145deg, #0f2027, #203a43, #2c5364);
-            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #333);
             color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
         }
-        .container {
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #00ffff;
+        }
+
+        form {
+            background-color: #222;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,255,255,0.3);
             width: 90%;
             max-width: 500px;
-            margin: 50px auto;
-            background: #101820;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 0 20px #00f7ff;
         }
-        h1 {
-            text-align: center;
-            font-size: 30px;
-            color: #00e6e6;
-            margin-bottom: 30px;
-        }
+
         label {
             display: block;
             margin-top: 15px;
-            color: #00f7ff;
+            color: #0ff;
         }
-        input, textarea {
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
             width: 100%;
             padding: 10px;
-            background: #1f2d3d;
-            border: none;
+            margin-top: 5px;
+            background: #111;
+            border: 1px solid #555;
             border-radius: 10px;
             color: #fff;
-            margin-top: 5px;
         }
+
         button {
             margin-top: 25px;
-            width: 100%;
-            padding: 12px;
-            background: #00f7ff;
+            padding: 12px 30px;
+            background-color: #00cccc;
+            color: #000;
             border: none;
             border-radius: 10px;
-            font-weight: bold;
-            font-size: 16px;
-            color: #000;
-            transition: 0.3s ease;
-        }
-        button:hover {
-            background: #00b6c2;
             cursor: pointer;
+            font-weight: bold;
         }
-        .status {
-            margin-top: 25px;
-            padding: 15px;
-            background: #112233;
-            border-left: 5px solid #00f7ff;
-            border-radius: 10px;
-            font-size: 14px;
+
+        button:hover {
+            background-color: #00ffaa;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔥 Auto Comment Panel</h1>
-        <form method="post">
-            <label for="token">Access Token</label>
-            <input type="text" id="token" name="token" placeholder="Enter your token" required>
+    <h1>🔥 FB Auto Commenter</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="hatersname">😡 Haters Name:</label>
+        <input type="text" name="hatersname" required placeholder="e.g. Saiim, NoobBoy">
 
-            <label for="post_id">Post ID</label>
-            <input type="text" id="post_id" name="post_id" placeholder="Enter Post ID" required>
+        <label for="timeinterval">⏱ Time Interval (seconds):</label>
+        <input type="number" name="timeinterval" min="1" required placeholder="e.g. 30">
 
-            <label for="message">Comment Message</label>
-            <textarea id="message" name="message" rows="3" placeholder="Enter your comment here..." required></textarea>
+        <label for="messages">📄 Message File (.txt):</label>
+        <input type="file" name="messages" accept=".txt" required>
 
-            <label for="haters_name">Haters Name</label>
-            <input type="text" id="haters_name" name="haters_name" placeholder="Enter name to tag or mention">
+        <label for="postlink">🔗 Facebook Post Link:</label>
+        <input type="text" name="postlink" required placeholder="https://facebook.com/post/xyz">
 
-            <label for="delay">Time Interval (seconds)</label>
-            <input type="number" id="delay" name="delay" placeholder="e.g., 5" min="0" step="0.1">
+        <label for="tokens">🔑 Token File (.txt):</label>
+        <input type="file" name="tokens" accept=".txt" required>
 
-            <button type="submit">🚀 Send Comment</button>
-        </form>
-        {% if status %}
-            <div class="status">{{ status }}</div>
-        {% endif %}
-    </div>
+        <button type="submit">🚀 Launch Attack</button>
+    </form>
 </body>
 </html>
