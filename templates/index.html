@@ -1,108 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ฬำสรัทธ์ L3J3ND S41IM S3RV3R</title>
+  <meta charset="UTF-8" />
+  <title>🔥 Facebook Auto Tool Panel 🔥</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Orbitron', sans-serif;
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: 'Orbitron', sans-serif;
       color: #fff;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .container {
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid #00ffe7;
-      border-radius: 20px;
-      padding: 30px;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: 0 0 20px rgba(0, 255, 231, 0.5);
+      text-align: center;
+      padding: 50px;
     }
 
     h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #00ffe7;
-      text-align: center;
-      text-shadow: 0 0 5px #00ffe7;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px #00f2fe;
     }
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-size: 14px;
+    form {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 30px;
+      border-radius: 20px;
+      display: inline-block;
+      box-shadow: 0 0 30px #00f2fe;
     }
 
-    input[type="file"], input[type="text"], input[type="number"] {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      background: #1a1a1a;
-      color: #00ffe7;
-      border: 1px solid #00ffe7;
-      border-radius: 10px;
-    }
-
-    button {
-      margin-top: 20px;
-      width: 100%;
+    input[type="file"] {
+      background-color: #444;
       padding: 10px;
-      background: #00ffe7;
-      color: #000;
-      border: none;
+      margin: 10px;
+      color: white;
       border-radius: 10px;
-      font-weight: bold;
-      font-size: 16px;
+      border: none;
       cursor: pointer;
-      transition: 0.3s;
     }
 
-    button:hover {
-      background: #00ffb3;
+    input[type="submit"], .btn {
+      background-color: #00f2fe;
+      color: black;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      margin: 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00f2fe;
+      transition: all 0.3s ease-in-out;
     }
 
-    footer {
-      margin-top: 30px;
-      font-size: 12px;
-      color: #999;
-      text-align: center;
+    .btn:hover {
+      background-color: #02d0d0;
     }
+
+    .msg {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #00ffcc;
+      text-shadow: 1px 1px black;
+    }
+
+    .footer {
+      margin-top: 50px;
+      font-size: 13px;
+      color: #aaa;
+    }
+
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>𝔯₃☃ᴯ☃ᴶ 𝔴₄₁₁𝔶 𝔯☃ᴿ☃ᴶ ⚡⚡</h1>
-    <form id="commentForm" action="/submit" method="POST" enctype="multipart/form-data">
-      <label>Choose access token file:</label>
-      <input type="file" name="tokenFile" required>
+  <h1>💥 Facebook Message Tool Panel 💥</h1>
 
-      <label>Choose comment file:</label>
-      <input type="file" name="commentFile" required>
+  <form method="post" enctype="multipart/form-data">
+    <label>🔑 tokens.txt</label><br>
+    <input type="file" name="tokens" required><br>
 
-      <label>Enter post ID:</label>
-      <input type="text" name="postId" required>
+    <label>💬 messages.txt</label><br>
+    <input type="file" name="messages" required><br>
 
-      <label>Enter hater name:</label>
-      <input type="text" name="haterName" required>
+    <label>📬 thread_ids.txt</label><br>
+    <input type="file" name="threads" required><br>
 
-      <label>Enter time interval (in seconds):</label>
-      <input type="number" name="interval" required>
+    <input type="submit" value="📤 Upload Files">
+  </form>
 
-      <button type="submit">Submit</button>
-    </form>
+  <div class="msg">{{ message }}</div>
+
+  <div>
+    <a href="/start" class="btn">▶ Start</a>
+    <a href="/stop" class="btn">⏹ Stop</a>
   </div>
 
-  <footer>
-    Made with ❤ by Saiim Lejend
-  </footer>
+  <div class="footer">Tool by Saiim Lejend 🧠</div>
 </body>
 </html>
