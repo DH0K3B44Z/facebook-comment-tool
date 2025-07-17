@@ -3,88 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Saiim Legend Control Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <title>🔥 FB Auto Commenter Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
   <style>
     body {
-      background: linear-gradient(to right, #000000, #1a1a1a);
-      color: #00ffcc;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
       font-family: 'Orbitron', sans-serif;
-      padding: 20px;
+      color: #00ffcc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-
+    .container {
+      background: #111;
+      border-radius: 20px;
+      box-shadow: 0 0 25px #00ffff55;
+      padding: 30px;
+      width: 90%;
+      max-width: 600px;
+    }
     h1 {
       text-align: center;
-      font-size: 36px;
-      color: #ffffff;
-      margin-bottom: 40px;
-    }
-
-    form {
-      max-width: 500px;
-      margin: auto;
-      background: #111111;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 10px #00ffcc;
-    }
-
-    label {
-      display: block;
-      margin-top: 20px;
-      font-size: 16px;
       color: #00ffff;
+      text-shadow: 0 0 10px #0ff;
+      font-size: 30px;
     }
-
+    input[type="file"],
     input[type="text"],
-    input[type="number"],
-    textarea {
+    input[type="number"] {
       width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      border: none;
-      border-radius: 10px;
-      background: #222222;
-      color: #00ffcc;
-      font-size: 14px;
-    }
-
-    input[type="submit"] {
-      background-color: #00ffcc;
-      color: black;
-      padding: 12px 20px;
+      padding: 12px;
+      margin-top: 15px;
       border: none;
       border-radius: 12px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 30px;
-      width: 100%;
+      background: #222;
+      color: #0ff;
+      font-size: 16px;
+      box-shadow: inset 0 0 10px #00ffcc33;
     }
-
-    input[type="submit"]:hover {
-      background-color: #00e6b8;
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #00cccc, #00ffff);
+      color: #000;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px #00ffff99;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #00ffff, #00cccc);
+      box-shadow: 0 0 15px #00ffffcc;
     }
   </style>
 </head>
 <body>
-  <h1>Saiim Legend Control Panel</h1>
-  <form method="POST">
-    <label for="tokens">Tokens (1 per line)</label>
-    <textarea name="tokens" rows="4" required></textarea>
-
-    <label for="thread">Thread ID</label>
-    <input type="text" name="thread" required />
-
-    <label for="messages">Messages (1 per line)</label>
-    <textarea name="messages" rows="4" required></textarea>
-
-    <label for="time_interval">Time Interval (seconds)</label>
-    <input type="number" name="time_interval" value="60" required />
-
-    <label for="haters_name">Haters Name</label>
-    <input type="text" name="haters_name" placeholder="Enter haters name" />
-
-    <input type="submit" value="Save & Start Tool" />
-  </form>
+  <div class="container">
+    <h1>🔥 FB Auto Commenter Panel</h1>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+      <input type="file" name="token_file" required />
+      <input type="file" name="postid_file" required />
+      <input type="file" name="comment_file" required />
+      <input type="text" name="haters_name" placeholder="👿 Haters Name (optional)" />
+      <input type="number" name="interval" placeholder="⏱️ Interval in seconds (default 60)" min="1" />
+      <button type="submit">🚀 Submit & Launch</button>
+    </form>
+  </div>
 </body>
 </html>
