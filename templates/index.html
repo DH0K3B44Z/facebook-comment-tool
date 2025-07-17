@@ -1,78 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>𝗧𝗛𝟯 𝗟𝟯𝗝𝟯𝗡𝗗 𝗙𝗨𝗖𝗞𝟯𝗥 𝗦𝗔𝗜𝗜𝗠 <𝟯</title>
   <style>
     body {
-      font-family: 'Courier New', monospace;
-      color: #fff;
-      background-image: url("/static/bg.jpg");
+      background-image: url('/static/background.jpg');
       background-size: cover;
-      background-position: center;
-      padding: 30px;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding-top: 50px;
     }
-    h1 {
-      text-shadow: 2px 2px #000;
-      color: #ff4df2;
-    }
-    label {
-      font-weight: bold;
-    }
-    input, textarea {
-      background: #222;
-      color: #0f0;
-      padding: 6px;
-      border: none;
-      border-radius: 4px;
-      width: 100%;
-      margin-bottom: 10px;
-    }
-    .btn {
-      background: #ff0;
-      padding: 10px 20px;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      color: #000;
-    }
-    #logBox {
-      background: rgba(0,0,0,0.7);
-      color: #0f0;
+    input, button {
       padding: 10px;
-      height: 300px;
-      overflow-y: scroll;
-      border: 1px solid #fff;
+      margin: 5px;
+      border-radius: 10px;
+      border: none;
+    }
+    button {
+      background-color: crimson;
+      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>𝗧𝗛𝟯 𝗟𝟯𝗝𝟯𝗡𝗗 𝗙𝗨𝗖𝗞𝟯𝗥 𝗦𝗔𝗜𝗜𝗠 &lt;3</h1>
-  <form method="POST" enctype="multipart/form-data">
-    <label>Upload Token File (.txt):</label>
-    <input type="file" name="tokens" required><br>
-    <label>Upload Comment File (.txt):</label>
-    <input type="file" name="comments" required><br>
-    <label>Haters Name:</label>
-    <input type="text" name="haters" required><br>
-    <label>Post ID or Link:</label>
-    <input type="text" name="post" required><br>
-    <label>Time Interval (seconds):</label>
-    <input type="number" name="interval" min="5" value="60" required><br>
-    <button class="btn" type="submit">Start Comments</button>
+  <h1>𝗧𝗛𝟯 𝗟𝟯𝗝𝟯𝗡𝗗 𝗙𝗨𝗖𝗞𝟯𝗥 𝗦𝗔𝗜𝗜𝗠 &lt;𝟯</h1>
+  <form method="POST">
+    <input type="text" name="hater" placeholder="Hater's Name" required><br>
+    <input type="text" name="post_id" placeholder="Post ID only" required><br>
+    <input type="number" name="delay" placeholder="Delay in seconds" required><br>
+    <button type="submit">Start Commenting</button>
   </form>
-
-  <h2>Live Logs</h2>
-  <div id="logBox"></div>
-
-  <script>
-    setInterval(() => {
-      fetch('/logs')
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById('logBox').innerHTML = data.reverse().join('<br>');
-        });
-    }, 3000);
-  </script>
 </body>
 </html>
