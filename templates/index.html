@@ -1,90 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>𝗟𝟯𝗝𝟯𝗡𝗗 𝗦𝟰𝟭𝟭𝗠 𝗦𝟯𝗥𝗩𝟯𝗥</title>
-  <style>
-    body {
-      background: #0f0f0f;
-      color: #ffffff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 30px;
-      text-align: center;
-    }
-
-    h1 {
-      font-weight: bold;
-      font-size: 28px;
-      color: #00ffae;
-      margin-bottom: 40px;
-    }
-
-    form {
-      background: #1a1a1a;
-      padding: 20px;
-      border-radius: 10px;
-      display: inline-block;
-      text-align: left;
-      box-shadow: 0 0 10px #00ffae;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      color: #00ffee;
-      margin-top: 15px;
-    }
-
-    input[type="file"],
-    input[type="text"],
-    input[type="number"] {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      background: #333;
-      border: 1px solid #555;
-      color: white;
-      border-radius: 5px;
-    }
-
-    button {
-      margin-top: 25px;
-      background: #00ffae;
-      color: black;
-      border: none;
-      padding: 10px 25px;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-      box-shadow: 0 0 10px #00ffae;
-    }
-
-    button:hover {
-      background: #00cc88;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>𝗟𝟯𝗝𝟯𝗡𝗗 𝗦𝟰𝟭𝟭𝗠 𝗦𝟯𝗥𝗩𝟯𝗥</title>
+    <style>
+        body {
+            font-family: 'Arial Black', sans-serif;
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 30px;
+        }
+        h1 {
+            color: #f39c12;
+            font-size: 32px;
+        }
+        form {
+            background: #222;
+            padding: 25px;
+            margin-top: 30px;
+            display: inline-block;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #f39c12;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 18px;
+            color: #fff;
+        }
+        input {
+            margin-top: 5px;
+            padding: 8px;
+            width: 250px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+        }
+        input[type="submit"] {
+            background: #f39c12;
+            color: #000;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <h1>𝗟𝟯𝗝𝟯𝗡𝗗 𝗦𝟰𝟭𝟭𝗠 𝗦𝟯𝗥𝗩𝟯𝗥</h1>
+    <h1>𝗟𝟯𝗝𝟯𝗡𝗗 𝗦𝟰𝟭𝟭𝗠 𝗦𝟯𝗥𝗩𝟯𝗥</h1>
+    <form method="POST" action="/submit" enctype="multipart/form-data">
+        <label>Choose Access Token File</label>
+        <input type="file" name="token_file" required>
 
-  <form action="/submit" method="POST" enctype="multipart/form-data">
-    <label>Choose access token file (.txt)</label>
-    <input type="file" name="token_file" accept=".txt" required>
+        <label>Choose Comment File</label>
+        <input type="file" name="comment_file" required>
 
-    <label>Choose comment file (.txt)</label>
-    <input type="file" name="comment_file" accept=".txt" required>
+        <label>Enter Post ID</label>
+        <input type="text" name="post_id" required>
 
-    <label>Enter post ID</label>
-    <input type="text" name="post_id" placeholder="eg. 1234567890" required>
+        <label>Enter Hater Name</label>
+        <input type="text" name="hatername" required>
 
-    <label>Enter hater name</label>
-    <input type="text" name="hater_name" placeholder="eg. @someone" required>
+        <label>Enter Time Interval (sec)</label>
+        <input type="number" name="interval" value="2" min="1" required>
 
-    <label>Enter time interval (seconds)</label>
-    <input type="number" name="interval" min="1" placeholder="eg. 30" required>
-
-    <button type="submit">Submit</button>
-  </form>
+        <input type="submit" value="🔥 Submit 🔥">
+    </form>
 </body>
 </html>
