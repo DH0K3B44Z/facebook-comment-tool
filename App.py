@@ -1,47 +1,35 @@
-from flask import Flask, render_template, request, redirect, url_for
-import requests, time, random
-from datetime import datetime
-import threading
+from flask import Flask, request, render_template
+import os
+from engine import start_commenting
 
 app = Flask(__name__)
-LOGS = []
-
-def comment_loop(token, post_id, messages, interval):
-    headers = {
-        "Authorization": f"Bearer {token}"
-    }
-    while True:
-        for msg in messages:
-            data = {'message': msg}
-            url = f"https://graph.facebook.com/v18.0/{post_id}/comments"
-            res = requests.post(url, headers=headers, data=data)
-            now = datetime.now().strftime('%H:%M:%S')
-            if res.status_code == 200:
-                LOGS.append((f"[{now}] ✅ Comment sent: {msg}", 'success'))
-            else:
-                LOGS.append((f"[{now}] ❌ Failed: {res.text}", 'fail'))
-            time.sleep(interval)
+app.config['UPLOAD_FOLDER'] = 'uploads'
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    message = None
     if request.method == 'POST':
-        token = request.form['token']
-        post_id = request.form['post_id']
-        message = request.form['messages']
-        interval = int(request.form['interval'])
+        token_file = request.files.get('token_file')
+        comment_file = request.files.get('comment_file')
+        hater = request.form.get('hater')
+        post_id = request.form.get('post_id')
+        delay = request.form.get('delay')
 
-        messages = message.splitlines()
+        if not all([token_file, comment_file, hater, post_id, delay]):
+            message = "❌ Please fill all fields and upload both files!"
+        else:
+            token_path = os.path.join(app.config['UPLOAD_FOLDER'], token_file.filename)
+            comment_path = os.path.join(app.config['UPLOAD_FOLDER'], comment_file.filename)
+            token_file.save(token_path)
+            comment_file.save(comment_path)
 
-        t = threading.Thread(target=comment_loop, args=(token, post_id, messages, interval))
-        t.daemon = True
-        t.start()
+            # Start the background commenting engine
+            start_commenting(token_path, comment_path, post_id, int(delay), hater)
 
-        return redirect(url_for('console'))
-    return render_template('index.html')
+            message = "✅ Commenting started in background!"
 
-@app.route('/console')
-def console():
-    return render_template('console.html', logs=LOGS[-50:])
+    return render_template('index.html', message=message)
 
 if __name__ == '__main__':
     app.run(debug=True)
