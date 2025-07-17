@@ -1,39 +1,22 @@
-from flask import Flask, request, render_template_string, redirect
-import os
+from flask import Flask, render_template, request
+import time
+import random
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'uploads'
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    with open('index.html', 'r') as f:
-        return render_template_string(f.read())
+    status = ""
+    if request.method == 'POST':
+        token = request.form.get('token')
+        post_id = request.form.get('post_id')
+        message = request.form.get('message')
+        haters_name = request.form.get('haters_name')
+        delay = float(request.form.get('delay') or 0)
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    token = request.files['token_file']
-    postid = request.files['postid_file']
-    comment = request.files['comment_file']
-    haters_name = request.form.get('haters_name', '').strip()
-    interval = request.form.get('interval', '').strip()
+        final_message = f"{message} {haters_name}"
+        # Simulate sending
+        status = f"✅ Comment sent to post ID: {post_id} with delay {delay}s and message: {final_message}"
+        time.sleep(delay)
 
-    # Save files
-    token.save(os.path.join(UPLOAD_FOLDER, 'tokens.txt'))
-    postid.save(os.path.join(UPLOAD_FOLDER, 'postids.txt'))
-    comment.save(os.path.join(UPLOAD_FOLDER, 'comments.txt'))
-
-    # Save extra inputs
-    with open(os.path.join(UPLOAD_FOLDER, 'hatersname.txt'), 'w') as f:
-        f.write(haters_name if haters_name else 'None')
-
-    with open(os.path.join(UPLOAD_FOLDER, 'interval.txt'), 'w') as f:
-        f.write(interval if interval else '60')
-
-    return '''
-    <h2 style="text-align:center; color:lime;">✅ Submitted Successfully!</h2>
-    <p style="text-align:center;"><a href="/">⬅️ Go Back</a></p>
-    '''
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    return render_template('index.html', status=status)
