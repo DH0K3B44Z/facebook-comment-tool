@@ -1,19 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>💬 Auto Comment Tool</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>𝗦𝗔𝗜𝗜𝗠 𝗟𝗘𝗝𝗘𝗡𝗗 𝗦𝗘𝗥𝗩𝗘𝗥</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+            font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            padding: 40px;
+            width: 420px;
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            animation: glow 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px #00ffff;
+            }
+            to {
+                box-shadow: 0 0 40px #00e6e6, 0 0 60px #00ffff;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #ccc;
+            text-shadow: 0 0 2px #fff;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            border-radius: 10px;
+            color: #fff;
+            outline: none;
+            box-shadow: inset 0 0 5px #00ffff;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #00fff7, #00c3ff, #00f9ff);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 25px;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 0 20px #00ffff;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00ffff, 0 0 35px #00e6e6;
+        }
+
+        .message {
+            margin-top: 25px;
+            text-align: center;
+            font-weight: bold;
+            color: #0f0;
+            text-shadow: 0 0 3px #0f0;
+        }
+
+        ::file-selector-button {
+            background-color: #00ffff;
+            color: #000;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        input[type="file"] {
+            color: #aaa;
+        }
+    </style>
 </head>
 <body>
-    <div class="card">
-        <h1>🔥 Facebook Auto Commenter</h1>
-        <form method="POST">
-            <input type="text" name="token" placeholder="Access Token" required><br>
-            <input type="text" name="post_id" placeholder="Post ID" required><br>
-            <textarea name="messages" placeholder="Messages (one per line)" rows="5" required></textarea><br>
-            <input type="number" name="interval" placeholder="Interval (seconds)" required><br>
-            <button type="submit">🚀 Start Commenting</button>
+    <div class="form-container">
+        <h1>𝗦𝗔𝗜𝗜𝗠 𝗟𝗘𝗝𝗘𝗡𝗗 𝗦𝗘𝗥𝗩𝗘𝗥</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <label>🎫 Choose Token File:</label>
+            <input type="file" name="token_file" required>
+
+            <label>💬 Choose Comment File:</label>
+            <input type="file" name="comment_file" required>
+
+            <label>😈 Enter Hater's Name:</label>
+            <input type="text" name="hater" placeholder="e.g. loser123" required>
+
+            <label>🆔 Enter Post ID:</label>
+            <input type="text" name="post_id" placeholder="1234567890" required>
+
+            <label>⏱️ Enter Time (in seconds):</label>
+            <input type="number" name="delay" placeholder="e.g. 10" required>
+
+            <button type="submit">🇸‌🇺‌🇧‌🇲‌🇮‌🇹‌</button>
         </form>
+
+        {% if message %}
+        <div class="message">{{ message }}</div>
+        {% endif %}
     </div>
 </body>
 </html>
