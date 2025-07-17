@@ -1,100 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Facebook Comment Tool Setup Guide</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>𝗟𝟯𝗝𝟯𝗡𝗗 𝗦𝟰𝟭𝟭𝗠 𝗦𝟯𝗥𝗩𝟯𝗥</title>
   <style>
     body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      font-weight: bold;
-      padding: 20px;
-    }
-    h1 {
-      color: #00ff99;
-      font-size: 28px;
-      text-align: center;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-    }
-    h2 {
-      color: #ffcc00;
-      font-size: 24px;
-      margin-top: 30px;
-      text-transform: uppercase;
-    }
-    p {
+      background: #0f0f0f;
       color: #ffffff;
-      font-size: 18px;
-      margin: 10px 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 30px;
+      text-align: center;
     }
-    code {
-      background-color: #222;
-      color: #00ffff;
-      padding: 2px 6px;
-      border-radius: 4px;
+
+    h1 {
+      font-weight: bold;
+      font-size: 28px;
+      color: #00ffae;
+      margin-bottom: 40px;
     }
-    .highlight {
-      color: #ff3399;
-      font-size: 20px;
-      background-color: #111;
-      padding: 5px;
+
+    form {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
       display: inline-block;
-      border-radius: 6px;
+      text-align: left;
+      box-shadow: 0 0 10px #00ffae;
     }
-    ul {
-      padding-left: 20px;
-      font-size: 18px;
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #00ffee;
+      margin-top: 15px;
     }
-    li {
-      margin-bottom: 10px;
-      color: #00ccff;
+
+    input[type="file"],
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      background: #333;
+      border: 1px solid #555;
+      color: white;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 25px;
+      background: #00ffae;
+      color: black;
+      border: none;
+      padding: 10px 25px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffae;
+    }
+
+    button:hover {
+      background: #00cc88;
     }
   </style>
 </head>
 <body>
+  <h1>𝗟𝟯𝗝𝟯𝗡𝗗 𝗦𝟰𝟭𝟭𝗠 𝗦𝟯𝗥𝗩𝟯𝗥</h1>
 
-  <h1>🔥 Facebook Auto Comment Tool Setup 🔥</h1>
+  <form action="/submit" method="POST" enctype="multipart/form-data">
+    <label>Choose access token file (.txt)</label>
+    <input type="file" name="token_file" accept=".txt" required>
 
-  <h2>📁 Required Files:</h2>
-  <ul>
-    <li><span class="highlight">token.txt</span> → Put your **access tokens**, one per line.</li>
-    <li><span class="highlight">comment.txt</span> → Put your **comments**, one per line.</li>
-  </ul>
+    <label>Choose comment file (.txt)</label>
+    <input type="file" name="comment_file" accept=".txt" required>
 
-  <h2>📌 Input Format:</h2>
-  <p>Just input the <span class="highlight">Post ID</span> only. (No full link)</p>
+    <label>Enter post ID</label>
+    <input type="text" name="post_id" placeholder="eg. 1234567890" required>
 
-  <h2>🛠️ Instructions:</h2>
-  <ul>
-    <li>Ensure both <code>token.txt</code> and <code>comment.txt</code> are uploaded in the **same directory** as the script.</li>
-    <li>Post ID should be copied directly from post URL, like: <code>123456789012345</code></li>
-    <li>You can type hater’s name or time manually wherever needed.</li>
-  </ul>
+    <label>Enter hater name</label>
+    <input type="text" name="hater_name" placeholder="eg. @someone" required>
 
-  <h2>🚀 Example Token File:</h2>
-  <pre>
-EAABsbCS1i...long_token_1
-EAAGm0PX4Z...long_token_2
-  </pre>
+    <label>Enter time interval (seconds)</label>
+    <input type="number" name="interval" min="1" placeholder="eg. 30" required>
 
-  <h2>💬 Example Comment File:</h2>
-  <pre>
-🔥🔥🔥 OP BRO
-😂😂 TOO FUNNY
-LEGEND MOVE 🤯
-  </pre>
-
-  <h2 style="color:#ff4444;">⚠️ Important:</h2>
-  <ul>
-    <li>Comment will be sent from tokens **one by one** (not simultaneously).</li>
-    <li>Same token will pause for 1 min to avoid block.</li>
-    <li>Tool will keep cycling tokens and comments.</li>
-  </ul>
-
-  <p style="text-align:center; color:#00ffcc; font-size:20px;">Tool designed by <b>Saiim Lejend 😎</b></p>
-
+    <button type="submit">Submit</button>
+  </form>
 </body>
 </html>
