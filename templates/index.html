@@ -2,110 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Saiim Lejend Comment Tool</title>
+  <title>Auto Comment Tool</title>
   <style>
     body {
-      background-color: #121212;
-      font-family: 'Poppins', sans-serif;
-      color: #e0e0e0;
+      background: #000;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
       text-align: center;
-      padding: 20px;
+      padding-top: 60px;
     }
-    img.logo {
-      width: 120px;
-      border-radius: 100%;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    }
+
     h1 {
-      color: #00ffcc;
-      margin-bottom: 10px;
-      font-size: 28px;
-      letter-spacing: 1px;
+      font-size: 48px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #00f0ff, #ff00d4);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 5px #0ff, 0 0 10px #f0f, 0 0 20px #0ff, 0 0 30px #f0f;
     }
-    .input-group {
-      margin: 10px 0;
+
+    .menu {
+      margin-top: 40px;
     }
-    input[type="text"], textarea {
-      width: 80%;
-      padding: 10px;
-      background: #1e1e1e;
-      border: 1px solid #444;
-      color: #eee;
+
+    .menu a {
+      display: block;
+      margin: 15px auto;
+      padding: 12px 30px;
+      width: 280px;
+      color: white;
+      background: linear-gradient(145deg, #1f1f1f, #3d3d3d);
       border-radius: 8px;
-    }
-    button {
-      padding: 10px 20px;
-      margin: 10px 5px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      font-size: 18px;
+      text-decoration: none;
+      box-shadow: 0 0 10px #0ff;
       transition: 0.3s;
     }
-    #startBtn {
-      background-color: #00e676;
+
+    .menu a:hover {
+      background: #0ff;
       color: #000;
-    }
-    #stopBtn {
-      background-color: #ff1744;
-      color: #fff;
-    }
-    #console {
-      margin-top: 20px;
-      background: #000;
-      color: #00ff00;
-      padding: 10px;
-      border-radius: 10px;
-      width: 80%;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: left;
-      font-family: monospace;
-      font-size: 14px;
-      max-height: 300px;
-      overflow-y: auto;
     }
   </style>
 </head>
 <body>
-
-  <!-- 🔥 Saiim Lejend Logo -->
-  <img src="https://i.imgur.com/0Z8FvCp.jpg" class="logo" alt="Saiim Lejend Logo" />
-
-  <h1>🔥 Saiim Lejend Comment Tool 🔥</h1>
-
-  <form method="POST" action="/start">
-    <div class="input-group">
-      <input type="text" name="post_id" placeholder="Enter Post ID (e.g., 1234567890_1234567890)" required>
-    </div>
-    <div class="input-group">
-      <input type="text" name="token_file" placeholder="Enter Token File Name (e.g., tokens.txt)" required>
-    </div>
-    <div class="input-group">
-      <input type="text" name="comment_file" placeholder="Enter Comment File Name (e.g., comments.txt)" required>
-    </div>
-    <div class="input-group">
-      <input type="text" name="delay" placeholder="Delay (in seconds, e.g., 60)" required>
-    </div>
-    <button type="submit" id="startBtn">🚀 Start Commenting</button>
-  </form>
-
-  <form method="POST" action="/stop">
-    <button type="submit" id="stopBtn">🛑 Stop</button>
-  </form>
-
-  <div id="console">
-    {% if log %}
-      {% for line in log %}
-        {{ line }}<br>
-      {% endfor %}
-    {% else %}
-      Console output will appear here...
-    {% endif %}
+  <h1>⚡ Auto Comment Tool ⚡</h1>
+  <div class="menu">
+    <a href="/fill">1. Fill Input Files</a>
+    <a href="/start">2. Launch Tool</a>
+    <a href="/console">3. View Console</a>
+    <a href="/stop">4. Stop Tool</a>
+    <a href="https://wa.me/918888888888">5. Contact Admin</a>
+    <a href="#">6. Exit</a>
+    <a href="/tokens">7. Check Your Tokens</a>
   </div>
-
 </body>
 </html>
