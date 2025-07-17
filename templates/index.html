@@ -1,60 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Auto Comment Tool</title>
-  <style>
-    body {
-      background: #000;
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-      text-align: center;
-      padding-top: 60px;
-    }
-
-    h1 {
-      font-size: 48px;
-      font-weight: bold;
-      background: linear-gradient(90deg, #00f0ff, #ff00d4);
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 5px #0ff, 0 0 10px #f0f, 0 0 20px #0ff, 0 0 30px #f0f;
-    }
-
-    .menu {
-      margin-top: 40px;
-    }
-
-    .menu a {
-      display: block;
-      margin: 15px auto;
-      padding: 12px 30px;
-      width: 280px;
-      color: white;
-      background: linear-gradient(145deg, #1f1f1f, #3d3d3d);
-      border-radius: 8px;
-      font-size: 18px;
-      text-decoration: none;
-      box-shadow: 0 0 10px #0ff;
-      transition: 0.3s;
-    }
-
-    .menu a:hover {
-      background: #0ff;
-      color: #000;
-    }
-  </style>
+    <title>💬 Auto Comment Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h1>⚡ Auto Comment Tool ⚡</h1>
-  <div class="menu">
-    <a href="/fill">1. Fill Input Files</a>
-    <a href="/start">2. Launch Tool</a>
-    <a href="/console">3. View Console</a>
-    <a href="/stop">4. Stop Tool</a>
-    <a href="https://wa.me/918888888888">5. Contact Admin</a>
-    <a href="#">6. Exit</a>
-    <a href="/tokens">7. Check Your Tokens</a>
-  </div>
+    <div class="card">
+        <h1>🔥 Facebook Auto Commenter</h1>
+        <form method="POST">
+            <input type="text" name="token" placeholder="Access Token" required><br>
+            <input type="text" name="post_id" placeholder="Post ID" required><br>
+            <textarea name="messages" placeholder="Messages (one per line)" rows="5" required></textarea><br>
+            <input type="number" name="interval" placeholder="Interval (seconds)" required><br>
+            <button type="submit">🚀 Start Commenting</button>
+        </form>
+    </div>
 </body>
 </html>
