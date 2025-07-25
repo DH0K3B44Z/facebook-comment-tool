@@ -1,35 +1,69 @@
-from flask import Flask, request, render_template
+from flask import Flask, render_template_string, request, redirect, url_for
+import threading
+import time
 import os
-from engine import start_commenting
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads'
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-@app.route('/', methods=['GET', 'POST'])
+is_running = False
+comment_thread = None
+
+# HTML UI
+template = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Facebook Comment Tool</title>
+</head>
+<body style="font-family: Arial; text-align: center; padding: 40px;">
+    <h1>📝 Facebook Auto Comment Tool</h1>
+    {% if not is_running %}
+    <form method="post" action="/start">
+        <input type="text" name="access_token" placeholder="Access Token" required><br><br>
+        <textarea name="message" placeholder="Enter your message..." rows="5" cols="40" required></textarea><br><br>
+        <input type="submit" value="🚀 Start Commenting">
+    </form>
+    {% else %}
+    <form method="post" action="/stop">
+        <p><strong>Auto-commenting is running...</strong></p>
+        <input type="submit" value="⛔ Stop">
+    </form>
+    {% endif %}
+</body>
+</html>
+"""
+
+# Fake commenting loop
+def auto_comment(access_token, message):
+    while is_running:
+        print(f"[✔] Sending comment: '{message}' with token: {access_token[:10]}...")
+        time.sleep(5)  # Simulated delay between comments
+
+@app.route("/", methods=["GET"])
 def index():
-    message = None
-    if request.method == 'POST':
-        token_file = request.files.get('token_file')
-        comment_file = request.files.get('comment_file')
-        hater = request.form.get('hater')
-        post_id = request.form.get('post_id')
-        delay = request.form.get('delay')
+    return render_template_string(template, is_running=is_running)
 
-        if not all([token_file, comment_file, hater, post_id, delay]):
-            message = "❌ Please fill all fields and upload both files!"
-        else:
-            token_path = os.path.join(app.config['UPLOAD_FOLDER'], token_file.filename)
-            comment_path = os.path.join(app.config['UPLOAD_FOLDER'], comment_file.filename)
-            token_file.save(token_path)
-            comment_file.save(comment_path)
+@app.route("/start", methods=["POST"])
+def start():
+    global is_running, comment_thread
 
-            # Start the background commenting engine
-            start_commenting(token_path, comment_path, post_id, int(delay), hater)
+    access_token = request.form["access_token"]
+    message = request.form["message"]
 
-            message = "✅ Commenting started in background!"
+    if not is_running:
+        is_running = True
+        comment_thread = threading.Thread(target=auto_comment, args=(access_token, message))
+        comment_thread.start()
 
-    return render_template('index.html', message=message)
+    return redirect(url_for("index"))
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route("/stop", methods=["POST"])
+def stop():
+    global is_running
+    is_running = False
+    return redirect(url_for("index"))
+
+# ✅ Deployment-friendly entry point
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
